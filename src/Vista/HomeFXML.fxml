@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="Control.HomeController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.HomeController">
    <children>
-      <ComboBox layoutX="55.0" layoutY="43.0" prefWidth="150.0" />
-      <TextArea layoutX="55.0" layoutY="144.0" prefHeight="157.0" prefWidth="187.0" />
-      <TextField layoutX="55.0" layoutY="96.0" />
-      <TextField layoutX="55.0" layoutY="327.0" />
-      <Button layoutX="347.0" layoutY="55.0" mnemonicParsing="false" text="Agregar" />
+      <TextArea fx:id="boxDescripcion" layoutX="55.0" layoutY="138.0" prefHeight="157.0" prefWidth="187.0" promptText="Descripcion producto" />
+      <TextField fx:id="boxNombre" layoutX="55.0" layoutY="80.0" promptText="Nombre producto" />
+      <Button fx:id="btnAgregar" layoutX="347.0" layoutY="55.0" mnemonicParsing="false" onAction="#onClick" text="Agregar" />
+      <TextField fx:id="boxMercadoObjetivo" layoutX="55.0" layoutY="330.0" promptText="Mercado objetivo" />
    </children>
 </AnchorPane>

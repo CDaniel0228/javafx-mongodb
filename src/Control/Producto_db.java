@@ -1,125 +1,73 @@
-
 package Control;
 
 import Modelo.Producto;
-import com.mysql.jdbc.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.mongodb.MongoException;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.bson.Document;
 
+public class Producto_db extends Conexion_db {
 
-public class Producto_db extends Conexion_db{
-    
-    public boolean registrar(Producto crear){
-        PreparedStatement ps = null;
-        Connection con = getConexion();
+    MongoCollection collection = coneccion().getCollection("Productos");
 
-        String sql = "INSERT INTO Producto (idNombre, descripcion, mercadoObjetivo) VALUES(?,?,?)";
-
+    public boolean registrar(Producto nuevo) {
+        boolean band = false;
         try {
-            
-            ps = con.prepareStatement(sql);
-         
-            ps.setString(1, crear.getNombre());
-            ps.setString(2, crear.getDescripcion()); 
-            ps.setString(3, crear.getMercadoObjetivo());
-           
-           ps.execute();
-            
-            return true;
-        } catch (SQLException e)  {
-            System.err.println(e);
-            return false;
-        } finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                System.err.println(e);
-            }
+            Document doc = new Document();
+            doc.put("nombre", nuevo.getNombre());
+            doc.put("descripcion", nuevo.getDescripcion());
+            doc.put("mercado_objetivo", nuevo.getMercadoObjetivo());
+            collection.insertOne(doc);
+            band = true;
+        } catch (MongoException e) {
+            System.out.println(e);
         }
-    }
-    
-    public boolean modificar(Producto editar) {
-        PreparedStatement ps = null;
-        Connection con = getConexion();
-
-        String sql = "UPDATE Producto SET descripcion=?, mercadoObjetivo=? WHERE idNombre=? ";
-        
-        try {
-           
-            ps = con.prepareStatement(sql);
-            
-            ps.setString(1, editar.getDescripcion());
-            ps.setString(2, editar.getMercadoObjetivo()); 
-            ps.setString(3, editar.getNombre());
-            
-            ps.executeUpdate();
-            
-            return true;
-        } catch (SQLException e) {
-            System.err.println(e);
-            return false;
-        } finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                System.err.println(e);
-            }
-        }
+        return band;
     }
 
-    public boolean eliminar(Producto borrar) {
-        PreparedStatement ps = null;
-        Connection con = getConexion();
-
-        String sql = "DELETE FROM Producto WHERE idNombre=? ";
-
+    public ObservableList buscarNombre() {
+        ObservableList items = FXCollections.observableArrayList();
+        System.out.println("m");
         try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, borrar.getNombre());
-            ps.execute();
-            return true;
-        } catch (SQLException e) {
-            System.err.println(e);
-            return false;
-        } finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                System.err.println(e);
+            System.out.println("l");
+            Document doc = new Document("nombre", 1).append("_id", 0);
+            MongoCursor<Document> resultDocument = collection.find().projection(doc).iterator();
+            while (resultDocument.hasNext()) {
+                Document document = resultDocument.next();
+                items.add(document.get("nombre").toString());
             }
+
+        } catch (MongoException e) {
+            System.out.println(e);
         }
+        return items;
     }
-    
-     public boolean buscarInformacion(Producto buscar) {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Connection con = getConexion();
 
-        String sql = "SELECT nombre FROM Caracteristicas WHERE idNombre=?";
-
+    public boolean actualizar(Producto rename) {
+        boolean band = false;
         try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, buscar.getNombre());
-            rs = ps.executeQuery();
-            
-            if(rs.next())
-            {
-               buscar.setNombre(rs.getString("nombre"));
-               
-               return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            System.err.println(e);
-            return false;
-        } finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                System.err.println(e);
-            }
+            Document editar = new Document("nombre", rename.getNombre());
+            Document editDoc = new Document("$set", new Document("descripcion", rename.getDescripcion()));
+            collection.findOneAndUpdate(editar, editDoc);
+            band = true;
+        } catch (MongoException e) {
+            System.out.println(e);
         }
+        return band;
     }
-    
+
+    public boolean eliminar(String nombre) {
+        boolean band = false;
+        try {
+            Document remover = new Document("nombre", nombre);
+            collection.findOneAndDelete(remover);
+            band = true;
+        } catch (MongoException e) {
+            System.out.println(e);
+        }
+        return band;
+    }
+
 }

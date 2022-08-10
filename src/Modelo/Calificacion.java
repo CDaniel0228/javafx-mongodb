@@ -3,51 +3,63 @@ package Modelo;
 
 
 public class Calificacion {
-    private int asesor;
-    private int tecnico;
-    private int ventas;
-    private int total;
-    private int caracteristicas;
+    private double asesor;
+    private double tecnico;
+    private double ventas;
+    private double total;
+    private String caracteristicas;
 
-    public int getAsesor() {
-        return asesor;
-    }
-
-    public void setAsesor(int asesor) {
+    public Calificacion(String caracteristicas, double asesor, double tecnico, double ventas, double total) {
+        this.caracteristicas = caracteristicas;
         this.asesor = asesor;
-    }
-
-    public int getTecnico() {
-        return tecnico;
-    }
-
-    public void setTecnico(int tecnico) {
         this.tecnico = tecnico;
-    }
-
-    public int getVentas() {
-        return ventas;
-    }
-
-    public void setVentas(int ventas) {
         this.ventas = ventas;
-    }
-
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
         this.total = total;
     }
 
-    public int getCaracteristicas() {
+    
+    public double getAsesor() {
+        return asesor;
+    }
+
+    public void setAsesor(double asesor) {
+        this.asesor = asesor;
+    }
+
+    public double getTecnico() {
+        return tecnico;
+    }
+
+    public void setTecnico(double tecnico) {
+        this.tecnico = tecnico;
+    }
+
+    public double getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(double ventas) {
+        this.ventas = ventas;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public String getCaracteristicas() {
         return caracteristicas;
     }
 
-    public void setCaracteristicas(int caracteristicas) {
+    public void setCaracteristicas(String caracteristicas) {
         this.caracteristicas = caracteristicas;
     }
+
+    
+    
     
     
 }

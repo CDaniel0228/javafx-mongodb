@@ -48,7 +48,7 @@ public class BienvenidaController implements Initializable {
         float count=0;
         @Override
         public void run(){            
-            barraProgresiva.setProgress(count+=0.01);
+            barraProgresiva.setProgress(count+=0.02);
             if(barraProgresiva.getProgress()>=1){
                 cancel();
                 btnSiguiente.setVisible(true);

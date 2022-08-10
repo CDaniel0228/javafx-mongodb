@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="Control.EvaluarFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.EvaluarFXMLController">
    <children>
-      <TableView layoutX="160.0" layoutY="70.0" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tabla" editable="true" layoutX="9.0" layoutY="96.0" prefHeight="247.0" prefWidth="582.0" stylesheets="@../Estilos/tabla.css">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="caractColumn" editable="false" prefWidth="121.0" text="Caracteristicas" />
+          <TableColumn fx:id="evalColumn" prefWidth="130.0" text="Evaluador" />
+            <TableColumn fx:id="eval2Column" prefWidth="109.0" text="Evaluador2" />
+            <TableColumn fx:id="eval3Column" prefWidth="121.0" text="Evaluador3" />
+            <TableColumn fx:id="totalColumn" prefWidth="99.0" text="Total" />
         </columns>
       </TableView>
+      <SplitMenuButton fx:id="listProducto" layoutX="20.0" layoutY="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Producto">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </SplitMenuButton>
    </children>
 </AnchorPane>

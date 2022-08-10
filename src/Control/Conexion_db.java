@@ -1,36 +1,22 @@
-
 package Control;
 
+import com.mongodb.MongoClient;
+import com.mongodb.MongoSocketOpenException;
+import com.mongodb.client.MongoDatabase;
 
-import com.mysql.jdbc.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Conexion_db {
-    
-    private final String base = "Software";
-    private final String user = "root";
-    private final String password = "";
-    private final String url = "jdbc:mysql://localhost:3306/" + base;
-    private Connection con = null;
-    
-    public Connection getConexion()
-    {
-        
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection) DriverManager.getConnection(this.url, this.user, this.password);
-            
-        } catch(SQLException e)
-        {
-            System.err.println(e);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Conexion_db.class.getName()).log(Level.SEVERE, null, ex);
-        }
-      return con;  
-    }
-    
-}
+    private final String bd = "Software";
+    private final String host = "localhost";
+    private final int port = 27017;
 
+    public MongoDatabase coneccion(){
+        try{
+            MongoClient mongoClient = new MongoClient(host,port);
+            return mongoClient.getDatabase(bd);
+        }catch(MongoSocketOpenException e){
+            return null;
+        }
+        
+    }
+}
