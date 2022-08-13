@@ -7,7 +7,7 @@ import org.bson.Document;
 
 public class Calificacion_db extends Conexion_db {
 
-    MongoCollection collection = coneccion().getCollection("Datos");
+    MongoCollection collection = coneccion().getCollection("Calificacion");
 
     public boolean registrar(Calificacion nuevo) {
         boolean band = false;
@@ -26,5 +26,6 @@ public class Calificacion_db extends Conexion_db {
         }
         return band;
     }
+    //http://javainutil.blogspot.com/2013/03/javafx-agregar-boton-tabla.html
 
 }

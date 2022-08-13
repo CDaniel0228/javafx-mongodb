@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
 public class CaracteristicasController implements Initializable {
     Caracteristicas_db caracteristicas_db=new Caracteristicas_db();
     Producto_db producto_db = new Producto_db();
+    Alertas alertas =new Alertas();
+
 
     @FXML
     private Button btnGuardar;
@@ -39,20 +41,31 @@ public class CaracteristicasController implements Initializable {
     private void onClick(ActionEvent e) {
         if (e.getSource().equals(btnGuardar)) {
             Caracteristicas caracteristicas=new Caracteristicas();
-            caracteristicas.setProducto(listaProductos.getSelectionModel().toString());
+            caracteristicas.setProducto(listaProductos.getValue().toString());
             caracteristicas.setNombre(boxNombre.getText());
             caracteristicas.setDescripcion(boxDescripcion.getText());
-            if(caracteristicas_db.registrar(caracteristicas)){
-                
+            if(caracteristicas_db.registrar(caracteristicas) && !vacio()){
+                alertas.informar("", "Se guardo exitosamente");
+                limpiar();
             }
         } else if (e.getSource().equals(btnModificar)) {
 
         }
     }
     
+    public boolean vacio() {
+        return boxNombre.getText().isEmpty() || boxDescripcion.getText().isEmpty()
+                || listaProductos.getValue()==null;
+    }
+
+    public void limpiar() {
+        boxNombre.setText("");
+        boxDescripcion.setText("");
+        listaProductos.setValue("");
+    }
+    
     public void listarProductos() {
         listaProductos.getItems().clear();
-        //listaProductos.getItems().add("Producto");
         for (int i = 0; i < producto_db.buscarNombre().size(); i++) {
             listaProductos.getItems().add(producto_db.buscarNombre().get(i));
         }

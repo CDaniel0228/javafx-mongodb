@@ -29,9 +29,7 @@ public class Producto_db extends Conexion_db {
 
     public ObservableList buscarNombre() {
         ObservableList items = FXCollections.observableArrayList();
-        System.out.println("m");
         try {
-            System.out.println("l");
             Document doc = new Document("nombre", 1).append("_id", 0);
             MongoCursor<Document> resultDocument = collection.find().projection(doc).iterator();
             while (resultDocument.hasNext()) {
